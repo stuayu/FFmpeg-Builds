@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LIBDRM_REPO="https://gitlab.freedesktop.org/mesa/drm.git"
-LIBDRM_COMMIT="a97f265c7dc1924a38a899082caf97519f8c532e"
+LIBDRM_COMMIT="d95b12e7e3ed6a22f284afbc5d2356365b820ea8"
 
 ffbuild_enabled() {
     [[ $TARGET != linux* ]] && return -1
@@ -16,7 +16,7 @@ ffbuild_dockerbuild() {
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
-        -Ddefault_library=static
+        -Ddefault_library=shared
         -Dlibkms=false
         -Dudev=false
         -Dcairo-tests=false
@@ -40,9 +40,17 @@ ffbuild_dockerbuild() {
         return -1
     fi
 
+    export CFLAGS="$RAW_CFLAGS"
+    export LDFLAFS="$RAW_LDFLAGS"
+
     meson "${myconf[@]}" ..
     ninja -j$(nproc)
     ninja install
+
+    gen-implib "$FFBUILD_PREFIX"/lib/{libdrm.so.2,libdrm.a}
+    rm "$FFBUILD_PREFIX"/lib/libdrm*.so*
+
+    echo "Libs: -ldl" >> "$FFBUILD_PREFIX"/lib/pkgconfig/libdrm.pc
 }
 
 ffbuild_configure() {

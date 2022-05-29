@@ -1,7 +1,7 @@
 #!/bin/bash
 
 HARFBUZZ_REPO="https://github.com/harfbuzz/harfbuzz.git"
-HARFBUZZ_COMMIT="3b2929e8a9da349fbd8437fd0b5cf0c8ce92cf32"
+HARFBUZZ_COMMIT="6695bf056065f2e2e56c0e00b9740e6685a8af28"
 
 ffbuild_enabled() {
     return 0

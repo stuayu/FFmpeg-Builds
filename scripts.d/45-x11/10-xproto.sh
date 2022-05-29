@@ -1,7 +1,7 @@
 #!/bin/bash
 
 XPROTO_REPO="https://gitlab.freedesktop.org/xorg/proto/xorgproto.git"
-XPROTO_COMMIT="57acac1d4c7967f4661fb1c9f86f48f34a46c48d"
+XPROTO_COMMIT="8c8bbb903410e39140727867a26bbe501f77de8f"
 
 ffbuild_enabled() {
     [[ $TARGET != linux* ]] && return -1
